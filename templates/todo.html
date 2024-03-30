@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knicks Todo App</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    {% include 'base.html' %}
+    <div class="jumbotron text-center">
+        {% if user.is_authenticated %}
+        <h1 class="title">Knicks Todo App</h1>
+        <p class="description">Vous l'avez tellement demandez ça y est elle est là!!! <br><br> L'équipe Knicks du Hackverse a mis à votre
+            disposition son Todo App !! <br><br>
+            Alors <strong>{{ user.first_name }} {{ user.last_name }}</strong> prêt(e) à créer une tâche ?</p>
+            <a href="/home" class="btn btn-primary btn-get-started">Nouvelle Tâche</a>
+        {% else %}
+        <h1 class="title">Bienvenue dans Knicks Todo App </h1>
+        <p class="description">Vous l'avez tellement demandez ça y est elle est là!!! <br><br> L'équipe <strong>Knicks</strong> du <strong>Hackverse</strong>  a mis à votre
+            disposition son Todo App !! Ainsi, Dominez vos journées et atteignez vos objectifs avec notre Todo App ultra-performante.
+            Simplifiez votre vie, gagnez en productivité et réalisez vos objectifs grâce à notre
+            application incontournable ! Pas de temps à perdre rejoignez nous !!</p>
+            <a href="/signin" class="btn btn-primary btn-get-started">Commençons sans plus attendre</a>
+        {% endif %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+</html>

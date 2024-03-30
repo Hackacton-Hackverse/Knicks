@@ -27,13 +27,15 @@
 
 ## Installation
 
-### Clôner le dépot Gitt
+### Clôner le dépot Git
+
+Il s'agit d'un projet Django donc veuillez avoir ```Python 3.8``` ou supérieur. 
 
 Pour commencer avec l'application Knicks Todo App, vous pouvez cloner le dépôt depuis GitHub de l'organisation Hackverse si vous y êtes membre en suivant les étapes suivantes
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/
+   git clone ttps://github.com/Hackacton-Hackverse/Knicks_Todo_List.git
    
 2. Navigate to the project folder:
    ```bash
@@ -41,8 +43,11 @@ Pour commencer avec l'application Knicks Todo App, vous pouvez cloner le dépôt
    
 3. Créez et activez un environnement virtuel (facultatif mais recommandé):
    ```bash
-   py -m venv env
-   myworld\Scripts\activate.bat
+   python -m venv env
+```bash
+   python -m venv env
+   env\Scripts\activate.bat
+```
    
 4. Installer les dépendances du projet:
    ```bash

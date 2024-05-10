@@ -1,4 +1,5 @@
-#Kncks Chat App
+##Kncks Chat App
+
 Chat Room app using Django WebSockets and Bootstrap
 
 

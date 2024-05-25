@@ -1,0 +1,105 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-primary">Your Chats</h2>
+    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#createGroupModal">
+      <i class="fas fa-plus"></i> Create Group
+    </button>
+  </div>
+
+  <div class="list-group">
+    {% for chat_room in chat_rooms %}
+      {% if chat_room.is_group_chat %}
+        <!-- Display group chat information with default group image -->
+        <a href="{% url 'chat:group_chat' chat_room.room_name %}" class="list-group-item list-group-item-action d-flex align-items-center">
+          <img src="{% static 'blog/img/chat.png' %}" class="rounded-circle chat-image mr-3" alt="Group Image">
+          <div>
+            <h5 class="mb-1">{{ chat_room.group_name }}</h5>
+            <small class="text-muted">Group Chat</small>
+          </div>
+        </a>
+      {% else %}
+        <!-- Display individual participant information -->
+        {% for participant in chat_room.participants.all %}
+          {% if participant.username != request.user.username %}
+            <a href="{% url 'chat:chat' participant.username %}" class="list-group-item list-group-item-action d-flex align-items-center">
+              {% if participant.profile.image_thumbnail_user.url == "/media/" %}
+                <img src="{% static 'blog/img/userProfil.png' %}" class="rounded-circle chat-image mr-3" alt="Profile">
+              {% else %}
+                <img src="{{ participant.profile.image_thumbnail_user.url }}" class="rounded-circle chat-image mr-3" alt="Profile">
+              {% endif %}
+              <div>
+                <h5 class="mb-1">{{ participant.username }}</h5>
+                <small class="text-muted">Individual Chat</small>
+              </div>
+            </a>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Create Group Modal -->
+<div class="modal fade" id="createGroupModal" tabindex="-1" role="dialog" aria-labelledby="createGroupModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createGroupModalLabel">Create Group</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="createGroupForm" method="post" action="">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="groupName">Group Name:</label>
+            <input type="text" class="form-control" id="groupName" name="group_name" required>
+          </div>
+          <div class="form-group">
+            <label>Participants:</label>
+            <div class="form-check">
+              {% for participant in all_participants %}
+                <input type="checkbox" class="form-check-input" id="{{ participant.username }}" name="participants" value="{{ participant.username }}">
+                <label class="form-check-label" for="{{ participant.username }}">{{ participant.username }}</label>
+              {% endfor %}
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Create Group</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+    <br><br>
+{% endblock %}
+
+{% block style %}
+<style>
+  .chat-image {
+    width: 50px;
+    height: 50px;
+  }
+  .list-group-item {
+    transition: background-color 0.2s ease;
+  }
+  .list-group-item:hover {
+    background-color: #f8f9fa;
+  }
+  .modal-header {
+    background-color: #007bff;
+    color: white;
+  }
+  .modal-header .close {
+    color: white;
+    opacity: 0.8;
+  }
+  .modal-header .close:hover {
+    opacity: 1;
+  }
+</style>
+{% endblock %}
